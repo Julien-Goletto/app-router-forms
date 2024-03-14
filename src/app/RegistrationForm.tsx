@@ -26,10 +26,24 @@ export const RegistrationForm = () => {
     },
   });
 
+  // const onSubmit = async (data: Registration) => {
+  //   const response = await fetch("api/register", {
+  //     method: "POST",
+  //     body: JSON.stringify(data),
+  //   });
+  //   const responseBody = await response.json();
+  //   console.log(responseBody);
+  // };
+
   const onSubmit = async (data: Registration) => {
-    const response = await fetch("api/register", {
+    const formData = new FormData();
+    Object.entries(data).forEach(([key, value]) => {
+      formData.append(key, String(value));
+    });
+
+    const response = await fetch("/api/registerFormData", {
       method: "POST",
-      body: JSON.stringify(data),
+      body: formData,
     });
     const responseBody = await response.json();
     console.log(responseBody);
