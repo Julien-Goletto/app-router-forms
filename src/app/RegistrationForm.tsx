@@ -26,8 +26,13 @@ export const RegistrationForm = () => {
     },
   });
 
-  const onSubmit = (data: Registration) => {
-    console.log(data);
+  const onSubmit = async (data: Registration) => {
+    const response = await fetch("api/register", {
+      method: "POST",
+      body: JSON.stringify(data),
+    });
+    const responseBody = await response.json();
+    console.log(responseBody);
   };
 
   return (
