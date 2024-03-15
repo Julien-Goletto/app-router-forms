@@ -15,7 +15,8 @@ import {
 } from "@ui/form";
 import { Button } from "@ui/button";
 import { Input } from "@ui/input";
-import { onDataAction, onFormAction } from "./actions";
+// import { onDataAction } from "./actions/onDataAction";
+import { onFormAction } from "./actions/onFormAction";
 import { useFormState } from "react-dom";
 import { useRef } from "react";
 
@@ -26,6 +27,7 @@ export const RegistrationForm = () => {
       first: "",
       last: "",
       email: "",
+      zipCode: "",
     },
   });
 
@@ -104,6 +106,20 @@ export const RegistrationForm = () => {
                   <Input placeholder="" {...field} />
                 </FormControl>
                 <FormDescription>Your last name.</FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="zipCode"
+            render={({ field }) => (
+              <FormItem className="w-full">
+                <FormLabel htmlFor="last">ZIP code</FormLabel>
+                <FormControl>
+                  <Input placeholder="" {...field} />
+                </FormControl>
+                <FormDescription>Your ZIP code (ddddd).</FormDescription>
                 <FormMessage />
               </FormItem>
             )}
