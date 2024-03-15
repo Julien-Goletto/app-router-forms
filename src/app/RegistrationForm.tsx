@@ -15,7 +15,9 @@ import {
 } from "@ui/form";
 import { Button } from "@ui/button";
 import { Input } from "@ui/input";
-import { onDataAction } from "./action";
+import { onDataAction, onFormAction } from "./actions";
+import { useFormState } from "react-dom";
+import { useRef } from "react";
 
 export const RegistrationForm = () => {
   const form = useForm<Registration>({
@@ -53,13 +55,30 @@ export const RegistrationForm = () => {
   // };
 
   // FormAction variant
-  const onSubmit = async (data: Registration) => {
-    console.log(await onDataAction(data));
-  };
+  // const onSubmit = async (data: Registration) => {
+  //   console.log(await onDataAction(data));
+  // };
+
+  // Form action with formData variant
+  const [state, formAction] = useFormState(onFormAction, {
+    message: "Please fill in the following fields, then submit.",
+    issues: undefined,
+  });
+
+  const formRef = useRef<HTMLFormElement>(null);
+
+  const onSubmit = () => formRef?.current?.submit();
 
   return (
     <Form {...form}>
-      <form className="space-y-8" onSubmit={form.handleSubmit(onSubmit)}>
+      <p className="text">{state?.message}</p>
+      {/* <form className="space-y-8" onSubmit={form.handleSubmit(onSubmit)}> */}
+      <form
+        className="space-y-8"
+        ref={formRef}
+        onSubmit={form.handleSubmit(onSubmit)}
+        action={formAction}
+      >
         <fieldset className="grid grid-cols-2 gap-8">
           <FormField
             control={form.control}
