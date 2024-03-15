@@ -15,6 +15,7 @@ import {
 } from "@ui/form";
 import { Button } from "@ui/button";
 import { Input } from "@ui/input";
+import { onDataAction } from "./action";
 
 export const RegistrationForm = () => {
   const form = useForm<Registration>({
@@ -26,6 +27,7 @@ export const RegistrationForm = () => {
     },
   });
 
+  // Classic onSubmit
   // const onSubmit = async (data: Registration) => {
   //   const response = await fetch("api/register", {
   //     method: "POST",
@@ -35,18 +37,24 @@ export const RegistrationForm = () => {
   //   console.log(responseBody);
   // };
 
-  const onSubmit = async (data: Registration) => {
-    const formData = new FormData();
-    Object.entries(data).forEach(([key, value]) => {
-      formData.append(key, String(value));
-    });
+  // FormData variant
+  // const onSubmit = async (data: Registration) => {
+  //   const formData = new FormData();
+  //   Object.entries(data).forEach(([key, value]) => {
+  //     formData.append(key, String(value));
+  //   });
 
-    const response = await fetch("/api/registerFormData", {
-      method: "POST",
-      body: formData,
-    });
-    const responseBody = await response.json();
-    console.log(responseBody);
+  //   const response = await fetch("/api/registerFormData", {
+  //     method: "POST",
+  //     body: formData,
+  //   });
+  //   const responseBody = await response.json();
+  //   console.log(responseBody);
+  // };
+
+  // FormAction variant
+  const onSubmit = async (data: Registration) => {
+    console.log(await onDataAction(data));
   };
 
   return (
